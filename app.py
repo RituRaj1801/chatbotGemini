@@ -51,7 +51,7 @@ def indexv():
             return jsonify({'error': 'No JSON data provided'}), 400
         
         prompt = data.get('prompt')
-        result = chatBot.generate_contet(prompt)
+        result = chatBot.generate_content(prompt)
 
         # Append the result to the default chat for demonstration purposes
         chats[0]['messages'].append({'user': prompt, 'bot': result})
