@@ -71,7 +71,7 @@ def indexv():
         # Append the result to the default chat for demonstration purposes
         chats[0]['messages'].append({'user': prompt, 'bot': result})
         
-        return jsonify({'response': result,'api_key':api_key})
+        return jsonify({'response': result})
     else:
         return "Welcome to the ChatBot API!"
 if __name__ == '__main__':
