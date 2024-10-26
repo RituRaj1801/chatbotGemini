@@ -1,6 +1,19 @@
 from flask import Flask, request, render_template,jsonify
-# app
-import chatBot
+
+
+import google.generativeai as genai
+import os
+from dotenv import load_dotenv
+
+# Load the environment variables from .env file
+load_dotenv()
+
+# Get the API key from environment variables
+api_key = os.getenv("GOOGLE_API_KEY")
+genai.configure(api_key=api_key)
+
+model = genai.GenerativeModel("models/gemini-pro")
+
 app = Flask(__name__)
 # Store chats in memory (or use a database for persistence in production)
 chats = [{'name': 'New Chat', 'id': 1, 'messages': []}]  # Default first chat
@@ -51,12 +64,14 @@ def indexv():
             return jsonify({'error': 'No JSON data provided'}), 400
         
         prompt = data.get('prompt')
-        result = chatBot.generate_content(prompt)
+
+        response = model.generate_content(prompt)
+        result= response.text
 
         # Append the result to the default chat for demonstration purposes
         chats[0]['messages'].append({'user': prompt, 'bot': result})
         
-        return jsonify({'response': result})
+        return jsonify({'response': result,'api_key':api_key})
     else:
         return "Welcome to the ChatBot API!"
 if __name__ == '__main__':
