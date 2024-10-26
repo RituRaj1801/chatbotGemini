@@ -352,7 +352,6 @@ button {
 
                 const result = await response.json();
                 loader.style.display='none';
-                console.log("api_key"+result.api_key)
                 displayMessage(`GeminiChats: ${result.response}`);
                 e.target.reset(); // Reset the input field after sending
             } catch (error) {
